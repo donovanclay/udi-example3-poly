@@ -64,9 +64,10 @@ class CounterNode(udi_interface.Node):
             self.setDriver('GV1', (self.count * mult), True, True)
             if self.cool == True:
                 self.cool = False
-            if self.cool == False:
+            else:
                 self.cool = True
-            
+            LOGGER.debug('Coolness has been set')
+
             self.setDriver('GV2', self.cool, True, True)
 
             # be fancy and display a notice on the polyglot dashboard
