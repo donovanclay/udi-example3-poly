@@ -62,11 +62,12 @@ class CounterNode(udi_interface.Node):
 
             self.setDriver('GV0', self.count, True, True)
             self.setDriver('GV1', (self.count * mult), True, True)
-            if self.cool == 1:
+            LOGGER.info('GV0 and GV1 has been set')
+            if self.cool is 1:
                 self.cool = 0
             else:
                 self.cool = 1
-            LOGGER.debug('Coolness has been set')
+            LOGGER.info(f'Coolness has been set to {self.cool}')
 
             self.setDriver('GV2', self.cool, True, True)
 
