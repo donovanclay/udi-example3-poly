@@ -29,7 +29,7 @@ class CounterNode(udi_interface.Node):
 
         self.poly = polyglot
         self.count = 0
-        self.cool = True
+        self.cool = 1
 
         self.Parameters = Custom(polyglot, 'customparams')
 
@@ -62,10 +62,10 @@ class CounterNode(udi_interface.Node):
 
             self.setDriver('GV0', self.count, True, True)
             self.setDriver('GV1', (self.count * mult), True, True)
-            if self.cool == True:
-                self.cool = False
+            if self.cool == 1:
+                self.cool = 0
             else:
-                self.cool = True
+                self.cool = 1
             LOGGER.debug('Coolness has been set')
 
             self.setDriver('GV2', self.cool, True, True)
