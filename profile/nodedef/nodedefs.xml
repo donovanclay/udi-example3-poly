@@ -4,7 +4,7 @@
     <sts>
       <st id="ST" editor="bool" />
       <st id="GV0" editor="raw" />
-	</sts>
+	  </sts>
     <cmds>
       <sends />
       <accepts>
@@ -21,8 +21,11 @@
       <st id="GV2" editor="bool" />
 	</sts>
     <cmds>
-      <sends />
-	  <accepts />
+      <sends/>
+	    <accepts>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </accepts>
     </cmds>
   </nodeDef>
 </nodeDefs>
