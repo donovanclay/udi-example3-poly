@@ -74,3 +74,10 @@ class CounterNode(udi_interface.Node):
             # be fancy and display a notice on the polyglot dashboard
             self.poly.Notices[self.name] = '{}: Current count is {}'.format(self.name, self.count)
 
+    def turnOn(self, command = none):
+        LOGGER.info(f'on command received on {self.name}')
+
+    def turnOff(self, command = none):
+        LOGGER.info(f'off command received on {self.name}')
+
+    commands = {'DON': turnOn, 'DOF': turnOff}
