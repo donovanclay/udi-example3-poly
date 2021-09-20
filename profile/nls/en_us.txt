@@ -10,3 +10,5 @@ ST-str-ST-NAME = Counter Active
 ST-str-GV0-NAME = raw data 0
 ST-str-GV1-NAME = raw data 1
 ST-str-GV2-NAME = Donovan is cool
+ST-str-GV3-NAME = Fan Level
+
