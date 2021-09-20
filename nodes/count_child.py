@@ -30,6 +30,7 @@ class CounterNode(udi_interface.Node):
         self.poly = polyglot
         self.count = 0
         self.cool = 1
+        self.fan = 0
 
         self.Parameters = Custom(polyglot, 'customparams')
 
@@ -60,16 +61,25 @@ class CounterNode(udi_interface.Node):
 
             self.count += 1
 
+            # COUNTERS
             self.setDriver('GV0', self.count, True, True)
             self.setDriver('GV1', (self.count * mult), True, True)
             LOGGER.info('GV0 and GV1 has been set')
+
+            # DONOVAN IS COOL 
             if self.cool is 1:
                 self.cool = 0
             else:
                 self.cool = 1
             LOGGER.info(f'Coolness has been set to {self.cool}')
-
             self.setDriver('GV2', self.cool, True, True)
+
+            # FAN LEVEL 
+            if self.fan <100:
+                self.fan += 10
+            else:
+                self.fan = 0
+            self.setDriver('GV3', self.fan, True, True)
 
             # be fancy and display a notice on the polyglot dashboard
             self.poly.Notices[self.name] = '{}: Current count is {}'.format(self.name, self.count)
