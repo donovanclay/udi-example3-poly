@@ -19,6 +19,7 @@
       <st id="GV0" editor="raw" />
       <st id="GV1" editor="raw" />
       <st id="GV2" editor="bool" />
+      <st id="GV3" editor="fan" />
 	</sts>
     <cmds>
       <sends/>
