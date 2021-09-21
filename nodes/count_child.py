@@ -7,9 +7,12 @@ MIT License
 """
 import udi_interface
 import sys
+import requests
 
 LOGGER = udi_interface.LOGGER
 Custom = udi_interface.Custom
+response = requests.get(http://192.168.0.2) #/rest/53 46 70 F
+LOGGER.info(f'Response from 192.168.0.2 {response}')
 
 '''
 This is our Counter device node.  All it does is update the count at the
