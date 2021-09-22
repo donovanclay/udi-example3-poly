@@ -11,8 +11,8 @@ import requests
 
 LOGGER = udi_interface.LOGGER
 Custom = udi_interface.Custom
-response = requests.get(http://192.168.0.2) #/rest/53 46 70 F
-LOGGER.info(f'Response from 192.168.0.2 {response}')
+# response = requests.get(http://192.168.0.2) #/rest/53 46 70 F
+# LOGGER.info(f'Response from 192.168.0.2 {response}')
 
 '''
 This is our Counter device node.  All it does is update the count at the
@@ -20,6 +20,7 @@ poll interval.
 '''
 class CounterNode(udi_interface.Node):
     id = 'child'
+    
     drivers = [
             {'driver': 'ST', 'value': 1, 'uom': 2},
             {'driver': 'GV0', 'value': 0, 'uom': 56},
@@ -35,7 +36,7 @@ class CounterNode(udi_interface.Node):
         self.count = 0
         self.cool = 1
         self.fan = 0
-
+        self.CustomData = Custom(polyglot, 'customdata')
         self.Parameters = Custom(polyglot, 'customparams')
 
         # subscribe to the events we want
@@ -94,4 +95,35 @@ class CounterNode(udi_interface.Node):
     def turnOff(self, command):
         LOGGER.info(f'off command received on {self.name}')
 
-    commands = {'DON': turnOn, 'DOF': turnOff}
+    def query(self, command=None):
+        isy = self.ISY.pyisy()
+        if isy is not None:
+            for name, node in isy.nodes:
+                
+                # check to make sure this is a device node, not group(scene)
+                if re.match(r'^Group', type(node).__name__):
+                    continue
+
+                if node.family != None and node.family != "ZWave":
+                    continue
+
+                #LOGGER.info('*  {} {} {} {}   {} -- {}'.format(node.family, node.status, node.uom, node.type, type(node.uom), name))
+                if node.status is not self.ISY.constants.ISY_VALUE_UNKNOWN:
+                    #if node.uom == 100 or node.uom == 51:
+                    if node.uom == "100" or node.uom == "51":
+                        category = node.type.split('.')[0]
+                        if node.family == None and (category == '1' or category == '2'):
+                            # insteon categories 1 and 2
+                            LOGGER.debug('   Found node {} with type {} category {} and status {}'.format(node.name, node.type, category, node.status))
+                            entry = {
+                                        'name': node.name, 
+                                        'value': node.status 
+                                    }
+                            self.CustomData[node.address] = entry
+                
+                LOGGER.info(f'CustomData has finished {self.CustomData}')
+
+    
+    commands = {'DON': turnOn, 'DOF': turnOff, 'Query': query}
+
+    
