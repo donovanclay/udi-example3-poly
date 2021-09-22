@@ -25,6 +25,7 @@
       <sends/>
 	    <accepts>
         <cmd id="DON"/>
+        <cmd id="Query"/>
         <cmd id="DOF"/>
       </accepts>
     </cmds>
